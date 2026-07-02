@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Workshop — Golden Hour Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FDF6F1;
+    --blush:#F5D6CB;
+    --rose:#E5A897;
+    --terracotta:#C97B63;
+    --brown:#4A3B34;
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--ivory);
+    color:var(--brown);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+    padding:48px 24px 64px;
+  }
+  .back{
+    display:inline-block;
+    margin-bottom:32px;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--terracotta);
+    text-decoration:none;
+  }
+  .wrap{
+    max-width:480px;
+    margin:0 auto;
+  }
+  .label{
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--terracotta);
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:38px;
+    line-height:1.15;
+    margin-bottom:14px;
+    color:#3D2E29;
+  }
+  .intro{
+    font-size:14px;
+    line-height:1.7;
+    color:#5A453D;
+    margin-bottom:40px;
+  }
+  form{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .field label{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:#8A7168;
+    margin-bottom:8px;
+  }
+  input, select{
+    width:100%;
+    padding:14px 16px;
+    background:var(--white);
+    border:1px solid rgba(74,59,52,0.2);
+    border-radius:2px;
+    font-family:'Jost',sans-serif;
+    font-size:15px;
+    color:var(--brown);
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  select{
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="9" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6" stroke="%234A3B34" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-repeat:no-repeat;
+    background-position:right 16px center;
+  }
+  input:focus, select:focus{
+    outline:none;
+    border-color:var(--terracotta);
+  }
+  input::placeholder{ color:#B5A199; }
+
+  .submit{
+    margin-top:12px;
+    padding:16px;
+    background:var(--brown);
+    color:var(--ivory);
+    border:none;
+    font-family:'Jost',sans-serif;
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border-radius:2px;
+    cursor:pointer;
+    transition:background 0.3s ease;
+  }
+  .submit:hover{ background:var(--terracotta); }
+
+  .note{
+    margin-top:18px;
+    font-size:12px;
+    line-height:1.6;
+    color:#9A8177;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">← Back</a>
+    <div class="label">Reserve</div>
+    <h1>Book a Workshop</h1>
+    <p class="intro">Fill in your details below — this will open WhatsApp with your booking request ready to send.</p>
+
+    <form id="bookingForm">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" placeholder="Your first and last name" required>
+      </div>
+
+      <div class="field">
+        <label for="workshop">Workshop</label>
+        <select id="workshop" required>
+          <option value="" disabled selected>Choose an option</option>
+          <option value="Signature Session (from €45)">Signature Session — from €45</option>
+          <option value="Private Session (from €80)">Private Session — from €80</option>
+          <option value="Custom Event (price on request)">Custom Event — price on request</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="date">Preferred date</label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="field">
+        <label for="guests">Number of people</label>
+        <input type="number" id="guests" min="1" placeholder="e.g. 2" required>
+      </div>
+
+      <div class="field">
+        <label for="phone">Your phone number</label>
+        <input type="tel" id="phone" placeholder="+49 ..." required>
+      </div>
+
+      <button type="submit" class="submit">Send via WhatsApp</button>
+    </form>
+
+    <p class="note">We'll get back to you shortly to confirm your spot.</p>
+  </div>
+
+<script>
+  document.getElementById('bookingForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const workshop = document.getElementById('workshop').value;
+    const date = document.getElementById('date').value;
+    const guests = document.getElementById('guests').value;
+    const phone = document.getElementById('phone').value.trim();
+
+    const message =
+`Hello Golden Hour Club! I'd like to book a workshop.
+
+Name: ${name}
+Workshop: ${workshop}
+Preferred date: ${date}
+Number of people: ${guests}
+My phone: ${phone}`;
+
+    const waNumber = "4917631780140";
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+    window.location.href = url;
+  });
+</script>
+</body>
+</html>

@@ -180,6 +180,20 @@
     text-align:right;
     max-width:150px;
   }
+  .offer-right{
+    text-align:right;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:4px;
+  }
+  .offer-price{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:21px;
+    font-weight:500;
+    color:var(--terracotta);
+  }
 
   .gallery-grid{
     display:grid;
@@ -192,6 +206,7 @@
     border:1px dashed rgba(74,59,52,0.25);
     border-radius:2px;
     position:relative;
+    overflow:hidden;
   }
   .gallery-slot::after{
     content:"";
@@ -203,6 +218,61 @@
     transform:translate(-50%,-50%);
     border-radius:50%;
     background:radial-gradient(circle, rgba(201,123,99,0.25) 0%, rgba(201,123,99,0) 70%);
+  }
+  .gallery-slot img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    cursor:pointer;
+  }
+  .lightbox{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(30,20,18,0.9);
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .lightbox.active{
+    display:flex;
+  }
+  .lightbox img{
+    max-width:100%;
+    max-height:90vh;
+    border-radius:2px;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:20px;
+    right:24px;
+    color:var(--ivory);
+    font-size:32px;
+    font-family:'Cormorant Garamond',serif;
+    cursor:pointer;
+    line-height:1;
+  }
+  .lightbox-download{
+    position:absolute;
+    bottom:28px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--terracotta);
+    color:var(--white);
+    font-family:'Jost',sans-serif;
+    font-size:13px;
+    letter-spacing:0.05em;
+    text-decoration:none;
+    padding:10px 22px;
+    border-radius:2px;
+  }
+  .gallery-slot:has(img)::after{
+    display:none;
+  }
+  .gallery-slot:has(img){
+    border-style:solid;
   }
 
   .cta{
@@ -274,18 +344,48 @@
       <div class="offer-name">Private Sessions</div>
       <div class="offer-note">for a gathering of your own</div>
     </div>
+    <div class="offer">
+      <div class="offer-name">Wood Painting</div>
+      <div class="offer-right">
+        <div class="offer-price">€20</div>
+        <div class="offer-note">per person</div>
+      </div>
+    </div>
   </section>
 
   <section class="gallery">
     <div class="label">Gallery</div>
     <div class="gallery-grid">
-      <div class="gallery-slot"></div>
-      <div class="gallery-slot"></div>
-      <div class="gallery-slot"></div>
-      <div class="gallery-slot"></div>
-      <div class="gallery-slot"></div>
-      <div class="gallery-slot"></div>
+      <div class="gallery-slot"><img src="gallery-1.jpeg" alt="Golden Hour Club" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-2.jpeg" alt="Golden Hour Club Glass Painting Workshop" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-3.jpeg" alt="Golden Hour Club workshop table setting" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-4.jpeg" alt="Hand-painted wood tray" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-5.jpeg" alt="Golden Hour Club Workshop" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-6.jpeg" alt="Golden Hour Club Workshop table setup" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-7.jpeg" alt="Golden Hour Club Workshop table setup" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-8.jpeg" alt="Wood painting in progress" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-9.jpeg" alt="Golden Hour Club Workshop" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-10.jpeg" alt="Golden Hour Club group" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-11.jpeg" alt="Painted wood mirrors" onclick="openLightbox(this.src)"></div>
+      <div class="gallery-slot"><img src="gallery-12.jpeg" alt="Golden Hour Club Workshop" onclick="openLightbox(this.src)"></div>
     </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img id="lightbox-img" src="" alt="">
+      <a id="lightbox-download" class="lightbox-download" href="" download onclick="event.stopPropagation()">Download</a>
+    </div>
+
+    <script>
+      function openLightbox(src){
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox-download').href = src;
+        document.getElementById('lightbox').classList.add('active');
+      }
+      function closeLightbox(){
+        document.getElementById('lightbox').classList.remove('active');
+      }
+    </script>
   </section>
 
   <section class="cta">
